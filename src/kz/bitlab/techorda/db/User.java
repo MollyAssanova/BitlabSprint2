@@ -1,19 +1,21 @@
 package kz.bitlab.techorda.db;
 
 public class User {
-    Long id;
-    String email;
-    String password;
-    String fullName;
+    private Long id;
+    private String email;
+    private String password;
+    private String fullName;
+    private int role_id;
 
-    public User(Long id, String email, String password, String fullName) {
+
+    public User(){}
+
+    public User(Long id, String email, String password, String fullName, int role_id) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-    }
-    public User(){
-
+        this.role_id = role_id;
     }
 
     public Long getId() {
@@ -46,5 +48,13 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 }

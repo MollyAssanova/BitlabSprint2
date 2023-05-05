@@ -15,20 +15,34 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/login.jsp").forward(request,response);
-    }
+        request.getRequestDispatcher("/login.jsp").forward(request, response);    }
 
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String redirect = "/login?emailerror";
+
         String email = request.getParameter("email");
+
         String password = request.getParameter("password");
-        User users = DBConnection.getUser(email);
-        if(users!=null && users.getPassword().equals(password)){
-            HttpSession session = request.getSession();
-            session.setAttribute("currentUser",users);
-            response.sendRedirect("/profile");
-        }else {
-            response.sendRedirect("/login?error");
+
+        User user = DBConnection.getUser(email);
+
+        if(user!=null){
+
+            redirect = "/login?passworderror";
+
+            if(user.getPassword().equals(password)){
+
+                redirect = "/profile";
+
+                request.getSession().setAttribute("CURRENT_USER", user);
+
+            }
+
         }
+
+        response.sendRedirect(redirect);
+
     }
 }
